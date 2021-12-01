@@ -29,6 +29,7 @@ class App extends Component<any, any> {
                     </Switch>
                 </div>
                 <div className="footer">
+                    <p>All rights reserved: © 2022 zLand</p>
                 </div>
             </div>
 
