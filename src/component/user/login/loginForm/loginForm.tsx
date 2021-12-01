@@ -18,8 +18,7 @@ class LoginForm extends Component<any, any> {
             tabIndex: 0,
             email: '',
             password: '',
-            firstName: '',
-            lastName: '',
+            name: '',
             isWeekPassword: false,
             isWrongEmail: false,
             emailHelperText: '',
@@ -93,6 +92,9 @@ class LoginForm extends Component<any, any> {
     handleTabChange = (event: React.SyntheticEvent | undefined, newValue: number) => {
         this.setState({
             tabIndex: newValue,
+            name: '',
+            email: '',
+            password: '',
             isWeekPassword: false,
             isWrongEmail: false,
             emailHelperText: '',
@@ -112,6 +114,7 @@ class LoginForm extends Component<any, any> {
                     <h4 style={{margin: "1.5em 0 0 0"}}>Email</h4>
                     <TextField fullWidth size="small" variant="outlined" style={{marginBottom: "1.5em"}}
                                name="email"
+                               value={this.state.email}
                                error={this.state.isWrongEmail}
                                helperText={this.state.emailHelperText}
                                onChange={this.handleInputChange}/>
@@ -120,6 +123,7 @@ class LoginForm extends Component<any, any> {
                     <TextField fullWidth size="small" variant="outlined" style={{marginBottom: "1.5em"}}
                                type="password"
                                name="password"
+                               value={this.state.password}
                                error={this.state.isWeekPassword}
                                helperText={this.state.passwordHelperText}
                                onChange={this.handleInputChange}/>
@@ -134,12 +138,14 @@ class LoginForm extends Component<any, any> {
                     <TextField fullWidth size="small" variant="outlined"
                                type="text"
                                name="name"
+                               value={this.state.name}
                                autoComplete="uname"
                                onChange={this.handleInputChange}/>
 
                     <h4 style={{margin: "1.5em 0 0 0"}}>Email</h4>
                     <TextField fullWidth size="small" variant="outlined" style={{marginBottom: "1.5em"}}
                                name="email"
+                               value={this.state.email}
                                error={this.state.isWrongEmail}
                                helperText={this.state.emailHelperText}
                                onChange={this.handleInputChange}/>
@@ -148,6 +154,7 @@ class LoginForm extends Component<any, any> {
                     <TextField fullWidth size="small" variant="outlined" style={{marginBottom: "1.5em"}}
                                type="password"
                                name="password"
+                               value={this.state.password}
                                error={this.state.isWeekPassword}
                                helperText={this.state.passwordHelperText}
                                onChange={this.handleInputChange}/>
