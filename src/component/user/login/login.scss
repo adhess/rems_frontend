@@ -1,0 +1,27 @@
+.social-login {
+    display: flex;
+    flex-direction: column;
+
+    > a {
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        margin-bottom: 1em;
+        padding: 4px;
+        color: black;
+        font-weight: 400;
+        height: 30px;
+
+        > img {
+            width: 30px;
+            height: 30px;
+            margin: 0 1em 0 2em;
+            border-radius: 4px;
+        }
+    }
+    > p {
+        margin: 0 auto 1em auto;
+    }
+}

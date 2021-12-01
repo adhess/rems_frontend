@@ -1,0 +1,23 @@
+.profile-container {
+    margin: 2em auto;
+    max-width: 800px;
+    padding: 2em;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+}
+
+.profile-info {
+    display: flex;
+    flex-direction: row;
+}
+
+.profile-avatar {
+    padding-right: 1em;
+}
+
+.profile-name {
+    > h2 {
+        margin-top: 0;
+    }
+
+}

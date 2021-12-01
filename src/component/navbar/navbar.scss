@@ -1,0 +1,11 @@
+.settingsDropList {
+  display: flex;
+  flex-direction: column;
+
+  >a {
+    width: 100%;
+    text-decoration: none;
+    color: #04142a;
+    margin-bottom: 0.5em;
+  }
+}
