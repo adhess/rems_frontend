@@ -67,11 +67,12 @@ class LoginForm extends Component<any, any> {
 
         const sigInRequest = {email: this.state.email, password: this.state.password, name: this.state.name};
 
+
         if (this.isValidForm()) {
             signup(sigInRequest)
                 .then(() => {
                     this.props.enqueueSnackbar("You're successfully registered. Please login to continue!", {variant: 'success'});
-                    this.props.setLoginModal(false);
+                    this.handleTabChange(undefined, 0);
                 })
                 .catch(() => {
                     this.props.enqueueSnackbar("Oops! Something went wrong. Please try again!", {variant: 'error'});
@@ -89,7 +90,7 @@ class LoginForm extends Component<any, any> {
         'aria-controls': `simple-tabpanel-${index}`
     });
 
-    handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
+    handleTabChange = (event: React.SyntheticEvent | undefined, newValue: number) => {
         this.setState({
             tabIndex: newValue,
             isWeekPassword: false,
