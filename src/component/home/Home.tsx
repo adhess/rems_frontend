@@ -1,13 +1,16 @@
-import {Component} from "react";
+import {Component, ComponentType} from "react";
 import {connect} from "react-redux";
+import {compose} from "redux";
+import {withTranslation} from "react-i18next";
 
 class Home extends Component<any, any> {
     render() {
+        const {t} = this.props;
         return <div className="homePage">
             <div className="homeText">
-                <h2>Invest In Your Future</h2>
-                <h2>Invest With Us</h2>
-                <p>Find your next home through the most trusted and reliable real estate management system.</p>
+                <h2>{t('Invest In Your Future')}</h2>
+                <h2>{t('Invest With Us')}</h2>
+                <p>{t('Find your next home through the most trusted and reliable real estate management system.')}</p>
             </div>
         </div>
     }
@@ -24,4 +27,4 @@ const mapStateToProps = (state: any) => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+export default compose<ComponentType>(withTranslation(), connect(mapStateToProps, mapDispatchToProps))(Home);

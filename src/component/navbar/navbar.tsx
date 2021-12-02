@@ -12,6 +12,9 @@ import {withRouter} from "react-router";
 import {withSnackbar} from "notistack";
 import {connect} from "react-redux";
 import NotificationsNoneOutlinedIcon from '@mui/icons-material/NotificationsNoneOutlined';
+import {withTranslation, Translation} from "react-i18next";
+import PublicIcon from '@mui/icons-material/Public';
+import LanguageMenu from "./languageMenu/languageMenu";
 
 const ITEM_HEIGHT = 48;
 
@@ -53,12 +56,13 @@ class Navbar extends Component<any, any> {
         super(props);
         this.state = {
             anchorMenu: null,
-            menuIsOpen: false
+            menuIsOpen: false,
+            localizationModalIsOpen: false
         };
     }
 
     render() {
-
+        const {t} = this.props;
         const handleLogout = () => {
             localStorage.removeItem(ACCESS_TOKEN);
             this.props.logout();
@@ -96,9 +100,9 @@ class Navbar extends Component<any, any> {
 
                 <div className="navbarNavigationsButtons">
                     <ButtonGroup variant="text" aria-label="text button group">
-                        <Button onClick={() => navigate('/buy')}>Buy</Button>
-                        <Button onClick={() => navigate('/rent')}>Rent</Button>
-                        <Button onClick={() => navigate('/sell')}>Sell</Button>
+                        <Button onClick={() => navigate('/buy')}>{t('Buy')}</Button>
+                        <Button onClick={() => navigate('/rent')}>{t('Rent')}</Button>
+                        <Button onClick={() => navigate('/sell')}>{t('Sell')}</Button>
                     </ButtonGroup>
                 </div>
 
@@ -117,10 +121,11 @@ class Navbar extends Component<any, any> {
                 </Link>
 
                 <div style={{width: "300px", display: "flex", justifyContent: "end"}}>
+                    <LanguageMenu ITEM_HEIGHT={ITEM_HEIGHT}/>
 
                     {!this.props.user ? null : <IconButton onClick={handleOpenNotificationModal}>
                         <NotificationsNoneOutlinedIcon style={{color: 'white'}}/>
-                    </IconButton> }
+                    </IconButton>}
 
                     {this.props.user ? null : <Button onClick={handleOpenLoginModal}>Login</Button>}
 
@@ -175,4 +180,4 @@ const mapStateToProps = (state: any) => {
     }
 }
 
-export default compose<ComponentType>(withRouter, withSnackbar, connect(mapStateToProps, mapDispatchToProps))(Navbar);
+export default compose<ComponentType>(withTranslation(), withRouter, withSnackbar, connect(mapStateToProps, mapDispatchToProps))(Navbar);

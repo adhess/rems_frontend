@@ -11,6 +11,8 @@ import {LOGIN} from "../store/actions";
 import {compose} from "redux";
 import {withSnackbar} from "notistack";
 import {ACCESS_TOKEN} from "../constants";
+import '../internationalization/i18n';
+import {withTranslation} from "react-i18next";
 
 
 class App extends Component<any, any> {
