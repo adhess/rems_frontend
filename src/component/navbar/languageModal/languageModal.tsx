@@ -4,19 +4,18 @@ import PublicIcon from "@mui/icons-material/Public";
 import {withTranslation} from "react-i18next";
 
 
-class LanguageMenu extends Component<any, any> {
+class LanguageModal extends Component<any, any> {
 
     constructor(props: any) {
         super(props);
         this.state = {
             anchorMenu: null,
-            menuIsOpen: false,
             localizationModalIsOpen: false
         };
     }
 
     render() {
-        const {t, i18n} = this.props;
+        const {i18n} = this.props;
         const handleLocalizationMenuClick = (event: React.MouseEvent<HTMLElement>) => {
             this.setState({anchorMenu: event.currentTarget, localizationModalIsOpen: true})
         }
@@ -59,4 +58,4 @@ class LanguageMenu extends Component<any, any> {
     }
 }
 
-export default withTranslation()(LanguageMenu);
+export default withTranslation()(LanguageModal);
