@@ -2,10 +2,23 @@
   display: flex;
   flex-direction: column;
 
-  >a {
+  > a {
     width: 100%;
     text-decoration: none;
     color: #04142a;
     margin-bottom: 0.5em;
+  }
+}
+
+.logoSection {
+  display: flex;
+  flex-direction: row;
+  color: white;
+  align-items: center;
+  width: 300px;
+  text-decoration: none;
+
+  :first-child {
+    margin-right: 5px;
   }
 }

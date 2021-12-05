@@ -38,42 +38,35 @@ class Navbar extends Component<any, any> {
         }
 
         return (
-            <div className={['row', 'navbarMenuSections'].join(" ")} style={{width: '100%', color: 'white'}}>
+            <div className='navbarMenuSections' style={{width: '100%'}}>
+                <div className='row'>
+                    <Link to="/" className="logoSection">
+                        <img src={logo} width={30} height={30} alt="ZLand"/>
+                        <h3>ZLand</h3>
+                    </Link>
 
-                <div className="navbarNavigationsButtons">
-                    <ButtonGroup variant="text" aria-label="text button group">
-                        <Button onClick={() => navigate('/buy')}>{t('Buy')}</Button>
-                        <Button onClick={() => navigate('/rent')}>{t('Rent')}</Button>
-                        <Button onClick={() => navigate('/sell')}>{t('Sell')}</Button>
-                    </ButtonGroup>
-                </div>
+                    <div className="navbarNavigationsButtons">
+                        <ButtonGroup variant="text" aria-label="text button group">
+                            <Button onClick={() => navigate('/buy')}>{t('Buy')}</Button>
+                            <Button onClick={() => navigate('/rent')}>{t('Rent')}</Button>
+                            <Button onClick={() => navigate('/sell')}>{t('Sell')}</Button>
+                        </ButtonGroup>
+                    </div>
 
-                <Link to="/"
-                      style={{
-                          display: 'flex',
-                          flexDirection: 'row',
-                          color: "white",
-                          alignItems: "center",
-                          width: "90px",
-                          justifyContent: "space-between",
-                          textDecoration: "none"
-                      }}>
-                    <img src={logo} width={30} height={30} alt="zLand"/>
-                    <h3>zLand</h3>
-                </Link>
+                    <div style={{width: "300px", display: "flex", justifyContent: "end"}}>
+                        <LanguageMenu ITEM_HEIGHT={ITEM_HEIGHT}/>
 
-                <div style={{width: "300px", display: "flex", justifyContent: "end"}}>
-                    <LanguageMenu ITEM_HEIGHT={ITEM_HEIGHT}/>
+                        {!this.props.user ? null : <IconButton onClick={handleOpenNotificationModal}>
+                            <NotificationsNoneOutlinedIcon style={{color: 'white'}}/>
+                        </IconButton>}
 
-                    {!this.props.user ? null : <IconButton onClick={handleOpenNotificationModal}>
-                        <NotificationsNoneOutlinedIcon style={{color: 'white'}}/>
-                    </IconButton>}
+                        {this.props.user ? null : <LoginModal/>}
 
-                    {this.props.user ? null : <LoginModal/>}
-
-                    {!this.props.user ? null : <MenuModal ITEM_HEIGHT={ITEM_HEIGHT}/>}
+                        {!this.props.user ? null : <MenuModal ITEM_HEIGHT={ITEM_HEIGHT}/>}
+                    </div>
                 </div>
             </div>
+
         )
     }
 }

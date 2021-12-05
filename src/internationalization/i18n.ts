@@ -1,20 +1,22 @@
 import i18n from "i18next";
-import translationEn from "../locals/translation-en";
-import translationFr from "../locals/translation-fr";
-import translationAr from "../locals/translation-ar";
+import TranslationEn from "../locals/translation-en";
+import TranslationFr from "../locals/translation-fr";
+import TranslationAr from "../locals/translation-ar";
 // import Backend from 'i18next-http-backend';
 import LanguageDetector from "i18next-browser-languagedetector";
 import {initReactI18next} from "react-i18next";
+import { i18nextPlugin } from 'translation-check'
+import LngDetector from 'i18next-browser-languagedetector';
 
 const resources = {
     en: {
-        translation: translationEn
+        translation: TranslationEn
     },
     fr: {
-        translation: translationFr
+        translation: TranslationFr
     },
     ar: {
-        translation: translationAr
+        translation: TranslationAr
     }
 };
 
@@ -23,10 +25,18 @@ i18n
     // .use(Backend)
     .use(LanguageDetector)
     .use(initReactI18next)
+    .use(i18nextPlugin)
+    .use(LngDetector)
     .init({
         resources,
-        lng: 'en',
+        fallbackLng: 'en',
         interpolation: {
             escapeValue: false // not needed for react as it escapes by default
+        },
+        detection: {
+            order: ["localStorage"],
+            lookupLocalStorage: 'i18nextLng',
+            // cache user language on
+            caches: ['localStorage'],
         }
     })

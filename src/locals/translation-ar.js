@@ -1,7 +1,26 @@
-export default {
+const TranslationAr = {
     "Sell": "بيع",
     "Buy": "شراء",
     "Rent": "تأجير",
     "Invest In Your Future": "استثمر في مستقبلك",
-    "Find your next home through the most trusted and reliable real estate management system.": "ابحث عن منزلك التالي من خلال نظام إدارة العقارات الأكثر موثوقية وموثوقية.",
-}
+    "Invest With Us": "استثمر معنا",
+    "Find your next home through the most trusted and reliable real estate management system.": "ابحث عن منزل احلامك من خلال نظام إدارة العقارات الأكثر موثوقية.",
+    "Profile": "الملف الشخصي",
+    "Logout": "تسجيل خروج",
+    "Login": "تسجيل الدخول",
+    "Welcome to ZLand": "مرحبًا بكم في ZLand",
+    "passwordHelperText":" يجب أن تتضمن كلمة المرور على: <br/>8 أحرف على الأقل<br/>حرف خاص واحد على الأقل<br/>مزيج من الحروف والأرقام<br/>ما لا يقل عن حرف صغير وحرف كبير<br/>",
+    "Email": "بريد الالكتروني",
+    "Password": "كلمه السر",
+    "Sign in": "تسجيل الدخول",
+    "Forget your password?": "نسيت كلمة المرور؟",
+    "FullName": "الاسم بالكامل",
+    "Submit": "إرسال",
+    "Continue with Google": "تواصل مع جوجل",
+    "Continue with Facebook": "تواصل مع الفيسبوك",
+    "Or connect with": "أو تواصل مع",
+    "New account": "حساب جديد",
+    "Wrong Email Format": "تنسيق بريد إلكتروني خاطئ",
+    "": "",
+};
+export default TranslationAr

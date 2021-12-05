@@ -10,6 +10,7 @@ import './loginForm.scss'
 import {LOGIN, LOGIN_MODAL} from "../../../../store/actions";
 import isEmail from 'validator/lib/isEmail';
 import isStrongPassword from 'validator/lib/isStrongPassword';
+import {Trans, withTranslation} from "react-i18next";
 
 class LoginForm extends Component<any, any> {
     constructor(props: any) {
@@ -103,15 +104,16 @@ class LoginForm extends Component<any, any> {
     };
 
     render() {
+        const {t} = this.props;
         return (
             <div>
                 <Tabs value={this.state.tabIndex} onChange={this.handleTabChange}>
-                    <Tab label="Sign in" {...this.tabsProps(0)} />
-                    <Tab label="New account" {...this.tabsProps(1)} />
+                    <Tab label={t("Sign in")} {...this.tabsProps(0)} />
+                    <Tab label={t("New account")} {...this.tabsProps(1)} />
                 </Tabs>
 
                 <TabPanel value={this.state.tabIndex} index={0}>
-                    <h4 style={{margin: "1.5em 0 0 0"}}>Email</h4>
+                    <h4 style={{margin: "1.5em 0 0 0"}}>{t('Email')}</h4>
                     <TextField fullWidth size="small" variant="outlined" style={{marginBottom: "1.5em"}}
                                name="email"
                                value={this.state.email}
@@ -119,7 +121,7 @@ class LoginForm extends Component<any, any> {
                                helperText={this.state.emailHelperText}
                                onChange={this.handleInputChange}/>
 
-                    <h4 style={{margin: "0"}}>Password</h4>
+                    <h4 style={{margin: "0"}}>{t('Password')}</h4>
                     <TextField fullWidth size="small" variant="outlined" style={{marginBottom: "1.5em"}}
                                type="password"
                                name="password"
@@ -128,13 +130,12 @@ class LoginForm extends Component<any, any> {
                                helperText={this.state.passwordHelperText}
                                onChange={this.handleInputChange}/>
 
-                    <Button fullWidth variant="contained" onClick={this.handleLogin.bind(this)}>Sign in</Button>
-                    <a className="forgetYourPasswordText" onClick={this.handleForgetPassword.bind(this)}>Forget your
-                        password?</a>
+                    <Button fullWidth variant="contained" onClick={this.handleLogin.bind(this)}>{t('Sign in')}</Button>
+                    <a className="forgetYourPasswordText" onClick={this.handleForgetPassword.bind(this)}>{t('Forget your password?')}</a>
                 </TabPanel>
 
                 <TabPanel value={this.state.tabIndex} index={1}>
-                    <h4 style={{margin: "1.5em 0 0 0"}}>FullName</h4>
+                    <h4 style={{margin: "1.5em 0 0 0"}}>{t('FullName')}</h4>
                     <TextField fullWidth size="small" variant="outlined"
                                type="text"
                                name="name"
@@ -142,7 +143,7 @@ class LoginForm extends Component<any, any> {
                                autoComplete="uname"
                                onChange={this.handleInputChange}/>
 
-                    <h4 style={{margin: "1.5em 0 0 0"}}>Email</h4>
+                    <h4 style={{margin: "1.5em 0 0 0"}}>{t('Email')}</h4>
                     <TextField fullWidth size="small" variant="outlined" style={{marginBottom: "1.5em"}}
                                name="email"
                                value={this.state.email}
@@ -150,7 +151,7 @@ class LoginForm extends Component<any, any> {
                                helperText={this.state.emailHelperText}
                                onChange={this.handleInputChange}/>
 
-                    <h4 style={{margin: "0"}}>Password</h4>
+                    <h4 style={{margin: "0"}}>{t('Password')}</h4>
                     <TextField fullWidth size="small" variant="outlined" style={{marginBottom: "1.5em"}}
                                type="password"
                                name="password"
@@ -159,7 +160,7 @@ class LoginForm extends Component<any, any> {
                                helperText={this.state.passwordHelperText}
                                onChange={this.handleInputChange}/>
 
-                    <Button fullWidth variant="contained" onClick={this.handleSignup.bind(this)}>Submit</Button>
+                    <Button fullWidth variant="contained" onClick={this.handleSignup.bind(this)}>{t('Submit')}</Button>
                 </TabPanel>
             </div>
         )
@@ -168,14 +169,14 @@ class LoginForm extends Component<any, any> {
     private isValidForm() {
         const isWrongEmail = !isEmail(this.state.email);
         const isWeekPassword = !isStrongPassword(this.state.password);
-        const emailHelperText = isWrongEmail ? "Wrong Email Format" : "";
-        const passwordHelperText = isWeekPassword ? <div>
+        const emailHelperText = isWrongEmail ? <Trans>Wrong Email Format</Trans> : "";
+        const passwordHelperText = isWeekPassword ? <Trans i18nKey="passwordHelperText">
             Password should include: <br/>
             At least 8 characters <br/>
             At least 1 special character <br/>
             Mix of letters and numbers <br/>
             At least 1 lowercase letter and 1 uppercase letter <br/>
-        </div> : "";
+        </Trans> : "";
         if (isWrongEmail || isWeekPassword) {
             this.setState({isWrongEmail, emailHelperText, isWeekPassword, passwordHelperText});
             return false;
@@ -214,4 +215,4 @@ const mapStateToProps = (state: any) => {
         user: state.user
     }
 }
-export default compose<ComponentType>(withRouter, withSnackbar, connect(mapStateToProps, mapDispatchToProps))(LoginForm);
+export default compose<ComponentType>(withTranslation(), withRouter, withSnackbar, connect(mapStateToProps, mapDispatchToProps))(LoginForm);

@@ -62,17 +62,17 @@ const Canvas = (props: any) => {
         context.fillRect(0, 0, context.canvas.width, context.canvas.height)
         console.log(canvas.width)
 
-    let canvasWidth = canvas.width,
-        canvasHeight = canvas.height,
-        canvasCssWidth = canvasWidth,
-        canvasCssHeight = canvasHeight;
+        let canvasWidth = canvas.width,
+            canvasHeight = canvas.height,
+            canvasCssWidth = canvasWidth,
+            canvasCssHeight = canvasHeight;
 
-    context.fillStyle = colours[colourIndex];
-    context.fillRect (0, 0, canvas.width, canvas.height);
-    context.font = "128px Arial";
-    context.textAlign = "center";
-    context.fillStyle = "#FFF";
-    context.fillText(initials, canvasCssWidth / 1.95, canvasCssHeight / 1.35);
+        context.fillStyle = colours[colourIndex];
+        context.fillRect(0, 0, canvas.width, canvas.height);
+        context.font = "128px Arial";
+        context.textAlign = "center";
+        context.fillStyle = "#FFF";
+        context.fillText(initials, canvasCssWidth / 1.95, canvasCssHeight / 1.35);
     }, [])
 
     return <canvas ref={canvasRef} {...props}/>

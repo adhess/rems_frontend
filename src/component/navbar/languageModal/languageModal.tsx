@@ -27,6 +27,12 @@ class LanguageModal extends Component<any, any> {
         const handleChangeLanguage = (language: string) => {
             this.setState({anchorMenu: null, localizationModalIsOpen: false})
             i18n.changeLanguage(language);
+
+            if (language === 'ar') {
+                document.getElementsByTagName('html')[0].setAttribute("dir", "rtl");
+            } else {
+                document.getElementsByTagName('html')[0].setAttribute("dir", "ltr");
+            }
         }
 
         return <>

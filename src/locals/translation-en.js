@@ -1,2 +1,3 @@
-export default {
-}
+let TranslationEn = {
+};
+export default TranslationEn

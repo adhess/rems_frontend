@@ -1,8 +1,26 @@
-export default {
+const TranslationFr = {
     "Sell": "Vendre",
     "Buy": "Acheter",
     "Rent": "Louer",
     "Invest In Your Future": "Investez-vous dans votre avenir",
     "Invest With Us": "Investissez avec nous",
-    "Find your next home through the most trusted and reliable real estate management system.": "Trouvez votre prochaine maison grâce au système de gestion immobilière le plus fiable."
-}
+    "Find your next home through the most trusted and reliable real estate management system.": "Trouvez votre prochaine maison grâce au système de gestion immobilière le plus fiable.",
+    "Profile": "Profil",
+    "Logout": "Se déconnecter",
+    "Login": "Se connecter",
+    "Welcome to ZLand": "Bienvenue sur ZLand",
+    "passwordHelperText": "Le mot de passe doit inclure: <br/>Au moins 8 caractères <br/>Au moins 1 caractère spécial <br/>Mélange de lettres et de chiffres <br/>Au moins 1 lettre minuscule et 1 lettre majuscule <br/>",
+    "Email": "E-mail",
+    "Password": "Mot de passe",
+    "Sign in": "S'identifier",
+    "Forget your password?": "Mot de passe oublié?",
+    "FullName": "Nom et prénom",
+    "Submit": "Soumettre",
+    "Continue with Google": "Continuer avec Google",
+    "Continue with Facebook": "Continuer avec Facebook",
+    "Or connect with": "Ou connectez-vous avec",
+    "New account": "Nouveau compte",
+    "Wrong Email Format": "Format d'e-mail incorrect",
+    "": "",
+};
+export default TranslationFr

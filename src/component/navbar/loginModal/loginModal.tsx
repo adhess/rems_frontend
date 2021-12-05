@@ -12,7 +12,7 @@ class LoginModal extends Component<any, any> {
 
 
     render() {
-
+        const {t} = this.props;
         const StyledModal = styled(ModalUnstyled)`
           position: fixed;
           z-index: 1300;
@@ -55,7 +55,7 @@ class LoginModal extends Component<any, any> {
 
         return (
             <>
-                <Button onClick={handleOpenLoginModal}>Login</Button>
+                <Button onClick={handleOpenLoginModal}>{t('Login')}</Button>
 
                 <StyledModal open={this.props.loginModal}
                              onClose={() => this.props.setLoginModal(false)}

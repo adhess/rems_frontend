@@ -12,7 +12,6 @@ import {compose} from "redux";
 import {withSnackbar} from "notistack";
 import {ACCESS_TOKEN} from "../constants";
 import '../internationalization/i18n';
-import {withTranslation} from "react-i18next";
 
 
 class App extends Component<any, any> {
@@ -31,7 +30,7 @@ class App extends Component<any, any> {
                     </Switch>
                 </div>
                 <div className="footer">
-                    <p>All rights reserved: © 2022 zLand</p>
+                    <p>All rights reserved: © 2022 ZLand</p>
                 </div>
             </div>
 

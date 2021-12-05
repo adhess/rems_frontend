@@ -3,6 +3,8 @@ import {IconButton, Menu, MenuItem} from "@mui/material";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import {ACCESS_TOKEN} from "../../../constants";
 import {withTranslation} from "react-i18next";
+import {compose} from "redux";
+import {withRouter} from "react-router";
 
 class MenuModal extends Component<any, any> {
     constructor(props: any) {
@@ -14,6 +16,8 @@ class MenuModal extends Component<any, any> {
     }
 
     render() {
+        const {t} = this.props;
+
         const handleMenuClose = () => {
             this.setState({anchorMenu: null, menuIsOpen: false})
         };
@@ -52,14 +56,14 @@ class MenuModal extends Component<any, any> {
                   }}
             >
                 <MenuItem key="profile" onClick={handleGoToProfile}>
-                    Profile
+                    {t('Profile')}
                 </MenuItem>
                 <MenuItem key="logout" onClick={handleLogout}>
-                    Logout
+                    {t('Logout')}
                 </MenuItem>
             </Menu>
         </>;
     }
 }
 
-export default withTranslation()(MenuModal);
+export default compose<any>(withTranslation(), withRouter)(MenuModal);
