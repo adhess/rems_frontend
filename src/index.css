@@ -1,3 +1,15 @@
+:root {
+  --lightblue: #08d9d6;
+  --dark: #252a34;
+  --cherry: #ff2e63;
+  --cherry2: #fc5185;
+  --lightgray: #eaeaea;
+  --gray: #828282;
+  --nav: #00A2EC;
+  --lightnav: calc(var(--nav) + 5);
+  --primary: #1976d2;
+}
+
 html {
   background: #f6eddc;
 }

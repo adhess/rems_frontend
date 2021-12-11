@@ -12,6 +12,7 @@ import {compose} from "redux";
 import {withSnackbar} from "notistack";
 import {ACCESS_TOKEN} from "../constants";
 import '../internationalization/i18n';
+import RentContainer from "../component/rentContainer/rentContainer";
 
 
 class App extends Component<any, any> {
@@ -27,6 +28,7 @@ class App extends Component<any, any> {
                         <Route path="/" exact component={Home}/>
                         <Route path="/oauth2/redirect" component={OAuth2RedirectHandler}/>
                         <Route path="/profile" exact component={Profile}/>
+                        <Route path="/rent" exact component={RentContainer}/>
                     </Switch>
                 </div>
                 <div className="footer">

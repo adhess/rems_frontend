@@ -38,7 +38,7 @@ class MapContainer extends Component<any, any> {
 
 
     render() {
-        return <div>
+        return <div style={{width: "60%"}}>
             <Map center={fromLonLat(this.state.center)} zoom={this.state.zoom}>
                 <Layers>
                     <TileLayer source={osm()} zIndex={0} />
