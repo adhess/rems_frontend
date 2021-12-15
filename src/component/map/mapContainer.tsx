@@ -38,12 +38,14 @@ class MapContainer extends Component<any, any> {
 
 
     render() {
-        return <div style={{width: "60%"}}>
-            <Map center={fromLonLat(this.state.center)} zoom={this.state.zoom}>
+        return <div style={{width: this.props.width ? this.props.width: "60%"}}>
+            <Map center={fromLonLat(this.props.center ? this.props.center : this.state.center)}
+                 height={this.props.height}
+                 zoom={this.props.zoom ? this.props.zoom : this.state.zoom}>
                 <Layers>
                     <TileLayer source={osm()} zIndex={0} />
 
-                    <VectorLayer source={vector({features: this.state.features})} style={undefined} />
+                    <VectorLayer source={vector({features: this.state?.features})} style={undefined} />
                 </Layers>
                 {/*<Controls>*/}
                 {/*    <FullScreenControl />*/}

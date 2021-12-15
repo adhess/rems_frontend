@@ -1,18 +1,24 @@
-import {Component} from "react";
+import React, {Component} from "react";
 import './property.scss';
 import image from '../../../assets/img/image.jpg';
 import {PropertyType} from "../../../types/inedex";
 import HotelTwoToneIcon from '@mui/icons-material/HotelTwoTone';
 import BathtubTwoToneIcon from '@mui/icons-material/BathtubTwoTone';
 import FavoriteTwoToneIcon from '@mui/icons-material/FavoriteTwoTone';
+import {connect} from "react-redux";
+import {DETAILS_PROPERTY_MODAL} from "../../../store/actions";
 
 type propsType = {
-    data: PropertyType
+    data: PropertyType,
+    setDetailsPropertyOpen: Function
 }
 
-export default class Property extends Component<propsType, any> {
+class Property extends Component<propsType, any> {
     render() {
-        return <div className='propertyContainer'>
+        const openDetailsPropertyHandler = () => {
+            this.props.setDetailsPropertyOpen(true, this.props.data);
+        }
+        return <div className='propertyContainer' onClick={openDetailsPropertyHandler}>
             <div>
                 <img src={image} alt=""/>
                 <h4 className='price'>${this.props.data.rentPrice}/mo</h4>
@@ -30,3 +36,17 @@ export default class Property extends Component<propsType, any> {
         </div>;
     }
 }
+
+const mapDispatchToProps = (dispatch: any) => {
+    return {
+        setDetailsPropertyOpen: (val: boolean, data: any) => dispatch({type: DETAILS_PROPERTY_MODAL, value: val, data: data})
+    }
+}
+
+const mapStateToProps = (state: any) => {
+    return {
+        isDetailsPropertyOpen: state.isDetailsPropertyOpen
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Property)

@@ -1,0 +1,33 @@
+.box {
+  display: flex;
+  flex-direction: row;
+  padding: 0 !important;
+  overflow: hidden;
+}
+
+.propertyImages {
+  display: flex;
+  flex-direction: row;
+  flex-flow: wrap;
+  justify-content: space-between;
+
+  img {
+    width: calc(50% - 2px);
+    margin-bottom: 4px;
+  }
+}
+
+.propertyDisplaySection {
+  overflow-y: scroll;
+}
+
+.centerRow {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 50%;
+
+  >:first-child {
+    margin-right: 0.5em;
+  }
+}

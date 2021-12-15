@@ -3,7 +3,7 @@ import "./Map.scss";
 import MapContext from "./MapContext";
 import * as ol from "ol";
 
-const Map = ({ children, zoom, center }) => {
+const Map = ({ children, zoom, center, height }) => {
 	const mapRef = useRef();
 	const [map, setMap] = useState(null);
 
@@ -39,7 +39,7 @@ const Map = ({ children, zoom, center }) => {
 
 	return (
 		<MapContext.Provider value={{ map }}>
-			<div ref={mapRef} className="ol-map" style={{height: window.innerHeight - 50}}>
+			<div ref={mapRef} className="ol-map" style={{height:height ? height: window.innerHeight - 50}}>
 				{children}
 			</div>
 		</MapContext.Provider>
