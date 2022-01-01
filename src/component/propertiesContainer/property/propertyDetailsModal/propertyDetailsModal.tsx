@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {Box, Button, IconButton, ModalUnstyled, styled} from "@mui/material";
+import {Box, Button, ModalUnstyled, styled} from "@mui/material";
 import {connect} from "react-redux";
 import {DETAILS_PROPERTY_MODAL} from "../../../../store/actions";
 import "./propertyDetailsModal.scss";
@@ -134,6 +134,7 @@ class PropertyDetailsModal extends Component<propsType, any> {
                         {/*{this.props?.data?.rentPrice}*/}
                         <MapContainer center={this.props.data.location}
                                       zoom={18}
+                                      canDragMarker={false}
                                       height={300}
                                       width={"100%"}
                                       markersCoordinates={[this.props.data.location]}/>

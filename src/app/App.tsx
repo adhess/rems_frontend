@@ -13,6 +13,7 @@ import {withSnackbar} from "notistack";
 import {ACCESS_TOKEN} from "../constants";
 import '../internationalization/i18n';
 import RentContainer from "../component/rentContainer/rentContainer";
+import PostPropertyContainer from "../component/postProperty/postPropertyContainer";
 
 
 class App extends Component<any, any> {
@@ -29,6 +30,7 @@ class App extends Component<any, any> {
                         <Route path="/oauth2/redirect" component={OAuth2RedirectHandler}/>
                         <Route path="/profile" exact component={Profile}/>
                         <Route path="/rent" exact component={RentContainer}/>
+                        <Route path="/sell" exact component={PostPropertyContainer}/>
                     </Switch>
                 </div>
                 <div className="footer">

@@ -28,9 +28,9 @@ class RentContainer extends Component<any, any> {
     private generateDummyProperties() {
         for (let i = 0; i < 10; i++) {
             const property = Object.assign({}, this.propertyModel);
-            const lat = 10.6346 + Math.pow(-1, Math.floor(2 * Math.random())) * Math.random();
-            const log = 35.8245 + Math.pow(-1, Math.floor(2 * Math.random())) * Math.random();
-            property.location = [lat, log];
+            const lat = 35.8245 + Math.pow(-1, Math.floor(2 * Math.random())) * Math.random();
+            const log = 10.6346 + Math.pow(-1, Math.floor(2 * Math.random())) * Math.random();
+            property.location = [log, lat];
             property.area = Math.round(4000 * Math.random());
             property.rentPrice = Math.round(4000 * Math.random());
             property.bedroomsNb = Math.round(10 * Math.random());
@@ -64,7 +64,9 @@ class RentContainer extends Component<any, any> {
     render() {
         const markersCoordinates = this.properties.map((u: any) => u.location);
         return <div style={{width: "100%", height: "100%", display: 'flex', flexDirection: "row"}}>
-            <MapContainer markersCoordinates={markersCoordinates}/>
+            <MapContainer markersCoordinates={markersCoordinates}
+                          canDragMarker={false}
+            />
             <PropertiesContainer properties={this.state.properties}/>
         </div>;
     }

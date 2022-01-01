@@ -15,3 +15,7 @@ export function login(loginRequest: any) {
 export function signup(signupRequest: any) {
     return axios.post(API_BASE_URL + "/auth/signup", signupRequest);
 }
+
+export function postNewProperty(form: any) {
+    return axios.post(API_BASE_URL + "/post/property", form);
+}

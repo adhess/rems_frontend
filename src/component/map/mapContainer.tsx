@@ -7,6 +7,8 @@ import mapConfig from "./config.json";
 import {Icon, Style} from "ol/style";
 import {Feature} from "ol";
 import {Point} from "ol/geom";
+import {Controls, FullScreenControl} from "./Controls";
+import iconMarker from "../../assets/img/marker.png";
 
 class MapContainer extends Component<any, any> {
 
@@ -15,17 +17,23 @@ class MapContainer extends Component<any, any> {
         this.state = {
             zoom: 7,
             center: mapConfig.center,
-            features: this.addMarkers(this.props.markersCoordinates)
         }
     }
 
-    addMarkers = (lonLatArray: any) => {
+    getMarkers = (lonLatArray: any) => {
         var iconStyle = new Style({
             image: new Icon({
                 anchorXUnits: "fraction",
                 anchorYUnits: "pixels",
-                src: mapConfig.markerImage32,
+                anchor: [0.5, 46],
+                src: iconMarker,
+                scale: [0.5, 0.5],
             }),
+            // text: new Text({
+            //     text: '9',
+            //     offsetY: 8,
+            //     offsetX: 1,
+            // })
         });
         return lonLatArray.map((item: any) => {
             let feature = new Feature({
@@ -38,18 +46,19 @@ class MapContainer extends Component<any, any> {
 
 
     render() {
-        return <div style={{width: this.props.width ? this.props.width: "60%"}}>
-            <Map center={fromLonLat(this.props.center ? this.props.center : this.state.center)}
+        return <div style={{width: this.props.width ? this.props.width : "60%"}}>
+            <Map canDragMarker={this.props.canDragMarker}
+                 center={fromLonLat(this.props.center ? this.props.center : this.state.center)}
                  height={this.props.height}
                  zoom={this.props.zoom ? this.props.zoom : this.state.zoom}>
                 <Layers>
-                    <TileLayer source={osm()} zIndex={0} />
-
-                    <VectorLayer source={vector({features: this.state?.features})} style={undefined} />
+                    <TileLayer source={osm()} zIndex={0}/>
+                    <VectorLayer source={vector({features: this.getMarkers(this.props.markersCoordinates)})}
+                                 style={undefined}/>
                 </Layers>
-                {/*<Controls>*/}
-                {/*    <FullScreenControl />*/}
-                {/*</Controls>*/}
+                <Controls>
+                    <FullScreenControl/>
+                </Controls>
             </Map>
         </div>;
     }

@@ -131,7 +131,7 @@ class LoginForm extends Component<any, any> {
                                onChange={this.handleInputChange}/>
 
                     <Button fullWidth variant="contained" onClick={this.handleLogin.bind(this)}>{t('Sign in')}</Button>
-                    <a className="forgetYourPasswordText" onClick={this.handleForgetPassword.bind(this)}>{t('Forget your password?')}</a>
+                    <button className="forgetYourPasswordText" onClick={this.handleForgetPassword.bind(this)}>{t('Forget your password?')}</button>
                 </TabPanel>
 
                 <TabPanel value={this.state.tabIndex} index={1}>

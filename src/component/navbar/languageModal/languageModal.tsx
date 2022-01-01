@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import {IconButton, Menu, MenuItem} from "@mui/material";
-import PublicIcon from "@mui/icons-material/Public";
 import {withTranslation} from "react-i18next";
+import TranslateIcon from '@mui/icons-material/Translate';
 
 
 class LanguageModal extends Component<any, any> {
@@ -37,7 +37,7 @@ class LanguageModal extends Component<any, any> {
 
         return <>
             <IconButton onClick={handleLocalizationMenuClick}>
-                <PublicIcon style={{color: 'white'}}/>
+                <TranslateIcon style={{color: 'white'}}/>
             </IconButton>
 
             <Menu anchorEl={this.state.anchorMenu}
