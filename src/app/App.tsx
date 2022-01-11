@@ -12,7 +12,7 @@ import {compose} from "redux";
 import {withSnackbar} from "notistack";
 import {ACCESS_TOKEN} from "../constants";
 import '../internationalization/i18n';
-import RentContainer from "../component/rentContainer/rentContainer";
+import ExploreContainer from "../component/exploreContainer/exploreContainer";
 import PostPropertyContainer from "../component/postProperty/postPropertyContainer";
 
 
@@ -29,7 +29,7 @@ class App extends Component<any, any> {
                         <Route path="/" exact component={Home}/>
                         <Route path="/oauth2/redirect" component={OAuth2RedirectHandler}/>
                         <Route path="/profile" exact component={Profile}/>
-                        <Route path="/explore" exact component={RentContainer}/>
+                        <Route path="/explore" exact component={ExploreContainer}/>
                         <Route path="/post" exact component={PostPropertyContainer}/>
                     </Switch>
                 </div>

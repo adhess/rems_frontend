@@ -4,7 +4,7 @@ import PropertiesContainer from "../propertiesContainer/propertiesContainer";
 import {findAllProperties} from "../../utils/APIUtils";
 import {PropertyType} from "../../types/inedex";
 
-class RentContainer extends Component<any, any> {
+class ExploreContainer extends Component<any, any> {
     propertyModel = {
         allowedPets: ['cat', 'dog'],
         petsNotAllowed: true,
@@ -39,4 +39,4 @@ class RentContainer extends Component<any, any> {
     }
 }
 
-export default RentContainer;
+export default ExploreContainer;
