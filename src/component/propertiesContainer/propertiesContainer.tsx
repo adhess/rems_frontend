@@ -20,19 +20,19 @@ class PropertiesContainer extends Component<PropsType, any> {
             height: '100%',
             overflowY: "scroll",
             background: 'white',
-            boxShadow: 'rgba(0, 0, 0, 0.1) 0px 4px 12px;'
+            boxShadow: 'rgba(0, 0, 0, 0.1) 0px 4px 12px'
         }}>
-            {this.props.isDetailsPropertyOpen ? <PropertyDetailsModal/>: null}
+            {this.props.isDetailsPropertyOpen ? <PropertyDetailsModal/> : null}
             {
-                this.props.properties.map((property: PropertyType) => <Property data={property}/>)
+                this.props.properties.map((property: PropertyType, index) => <Property key={"property-" + index}
+                                                                                       data={property}/>)
             }
         </div>
     }
 }
 
 const mapDispatchToProps = (dispatch: any) => {
-    return {
-    }
+    return {}
 }
 
 const mapStateToProps = (state: any) => {

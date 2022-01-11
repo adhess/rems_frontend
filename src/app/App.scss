@@ -16,7 +16,7 @@ html, body {
 }
 
 .main {
-  height: calc(100% - 52px);
+  height: calc(100% - 50px);
   width: 100%;
 }
 
@@ -83,5 +83,8 @@ html, body {
 .footer {
   width: 100%;
   display: flex;
-  justify-content: center;
+  justify-content: end;
+  position: fixed;
+  bottom: 0px;
+  right: 20px;
 }

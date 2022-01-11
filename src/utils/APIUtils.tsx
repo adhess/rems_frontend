@@ -17,5 +17,14 @@ export function signup(signupRequest: any) {
 }
 
 export function postNewProperty(form: any) {
-    return axios.post(API_BASE_URL + "/post/property", form);
+    return axios.post(API_BASE_URL + "/property/post", form);
+}
+
+export function findAllProperties() {
+    return axios.get(API_BASE_URL + "/property/findAll?pageSize=10&page=1");
+}
+
+export function findAddress(lat: Number, lon: Number) {
+    return fetch('http://nominatim.openstreetmap.org/reverse?format=json&lon=' + lon + '&lat=' + lat)
+        .then(res => res.json());
 }

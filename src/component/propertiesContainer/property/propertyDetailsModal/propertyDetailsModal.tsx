@@ -6,28 +6,21 @@ import "./propertyDetailsModal.scss";
 import img from "../../../../assets/img/image.jpg";
 import FavoriteTwoToneIcon from '@mui/icons-material/FavoriteTwoTone';
 import ErrorTwoToneIcon from '@mui/icons-material/ErrorTwoTone';
-import {PropertyType} from "../../../../types/inedex";
+import {additionalInformation, generalInformation, interiorInformation, PropertyType} from "../../../../types/inedex";
 import millify from "millify";
 import BathtubTwoToneIcon from "@mui/icons-material/BathtubTwoTone";
 import HotelTwoToneIcon from "@mui/icons-material/HotelTwoTone";
 import MapContainer from "../../../map/mapContainer";
-import KitchenTwoToneIcon from '@mui/icons-material/KitchenTwoTone';
-import LocalFireDepartmentTwoToneIcon from '@mui/icons-material/LocalFireDepartmentTwoTone';
-import AirTwoToneIcon from '@mui/icons-material/AirTwoTone';
-import DepartureBoardTwoToneIcon from '@mui/icons-material/DepartureBoardTwoTone';
 import EventAvailableTwoToneIcon from '@mui/icons-material/EventAvailableTwoTone';
-import PetsTwoToneIcon from '@mui/icons-material/PetsTwoTone';
 import CallIcon from '@mui/icons-material/Call';
-import FireplaceTwoToneIcon from '@mui/icons-material/FireplaceTwoTone';
-import ConnectWithoutContactTwoToneIcon from '@mui/icons-material/ConnectWithoutContactTwoTone';
-import TollTwoToneIcon from '@mui/icons-material/TollTwoTone';
-import LensBlurTwoToneIcon from '@mui/icons-material/LensBlurTwoTone';
+import AddressRow from "../../../../common/AddressRow/AddressRow";
+import {getPropertyOptionsInfo} from "../../../../utils/utils";
 
 type propsType = {
     isDetailsPropertyOpen: boolean,
     data: PropertyType,
     setDetailsPropertyOpen: Function,
-} | any;
+};
 
 class PropertyDetailsModal extends Component<propsType, any> {
 
@@ -74,15 +67,17 @@ class PropertyDetailsModal extends Component<propsType, any> {
                          BackdropComponent={Backdrop}>
                 <Box sx={style} className='box'>
                     <div className="propertyDisplaySection" style={{width: '60%'}}>
-                        <img src={img} alt="" width="100%"/>
+
+                        {
+                            <img src={this.props.data.images.length > 0 ? this.props.data.images[0] : img} alt=""
+                                 width="100%"/>
+                        }
                         <div className="propertyImages">
-                            <img src={img} alt=""/>
-                            <img src={img} alt=""/>
-                            <img src={img} alt=""/>
-                            <img src={img} alt=""/>
-                            <img src={img} alt=""/>
-                            <img src={img} alt=""/>
-                            <img src={img} alt=""/>
+                            {
+                                this.props.data.images.map((url: string, index) => {
+                                    return index === 0 ? null : <img key={index} src={url} alt="" width="100%"/>
+                                })
+                            }
                         </div>
                     </div>
                     <div className="propertyDisplaySection" style={{width: '40%', paddingBottom: '5em'}}>
@@ -106,19 +101,19 @@ class PropertyDetailsModal extends Component<propsType, any> {
                             <div style={{display: 'flex', flexDirection: 'row', flexFlow: 'wrap'}}>
                                 <div style={{margin: 'auto 3em auto 1em'}}>
                                     <strong style={{fontSize: 24}}>${
-                                        !this.props?.data?.rentPrice ? null :
-                                            millify(this.props?.data?.rentPrice,
+                                        !this.props?.data?.price ? null :
+                                            millify(this.props?.data?.price,
                                                 {precision: 3, decimalSeparator: ',', units: ['', '']})}</strong>
                                     <strong style={{fontSize: 11}}>/mo</strong>
                                 </div>
 
                                 <div className='property-infos'>
                                     <div className='property-info'>
-                                        <p>{this.props.data.bathroomsNb}</p>
+                                        <p>{this.props.data.nbBathrooms}</p>
                                         <BathtubTwoToneIcon/>
                                     </div>
                                     <div className='property-info'>
-                                        <p>{this.props.data.bedroomsNb}</p>
+                                        <p>{this.props.data.nbBedrooms}</p>
                                         <HotelTwoToneIcon/>
                                     </div>
                                     <div className='property-info'>
@@ -128,16 +123,15 @@ class PropertyDetailsModal extends Component<propsType, any> {
                                 </div>
                             </div>
 
-
-                            <p style={{marginLeft: '1em'}}>{this.props.data.address}</p>
+                            <AddressRow {...this.props?.data?.address}/>
                         </div>
-                        {/*{this.props?.data?.rentPrice}*/}
-                        <MapContainer center={this.props.data.location}
+
+                        <MapContainer center={[this.props.data.latitude, this.props.data.longitude]}
                                       zoom={18}
                                       canDragMarker={false}
                                       height={300}
                                       width={"100%"}
-                                      markersCoordinates={[this.props.data.location]}/>
+                                      markersCoordinates={[[this.props.data.latitude, this.props.data.longitude]]}/>
                         <h3 style={{marginLeft: '1em'}}>Rental facts and features</h3>
                         <div style={{marginLeft: '1em', display: 'flex', flexDirection: 'row', flexFlow: 'wrap'}}>
                             <div className='centerRow'>
@@ -146,45 +140,65 @@ class PropertyDetailsModal extends Component<propsType, any> {
                             </div>
 
                             <div className='centerRow'>
-                                <p>Man Jan 17 2022</p>
+                                <p>{this.props.data.availableDate.getDay()}/{this.props.data.availableDate.getMonth()}/{this.props.data.availableDate.getFullYear()}</p>
                             </div>
+                            {
+                                generalInformation
+                                    .map((title: string) => getPropertyOptionsInfo(title)?.value)
+                                    .find(value => !value || this.props.data[value]) === undefined ? null :
+                                    <h4 style={{width: '100%'}}>General Information:</h4>
+                            }
+                            {
+                                generalInformation.map((title: string, index) => {
+                                    const info = getPropertyOptionsInfo(title);
+                                    if (!info) return null;
 
-                            <div className='centerRow'>
-                                <AirTwoToneIcon/>
-                                <h5>Cooling</h5>
-                            </div>
-                            <div className='centerRow'>
-                                <DepartureBoardTwoToneIcon/>
-                                <h5>Parking</h5>
-                            </div>
-                            <div className='centerRow'>
-                                <KitchenTwoToneIcon/>
-                                <h5>Refrigerator</h5>
-                            </div>
-                            <div className='centerRow'>
-                                <LocalFireDepartmentTwoToneIcon/>
-                                <h5>Gas Range</h5>
-                            </div>
-                            <div className='centerRow'>
-                                <PetsTwoToneIcon/>
-                                <h5>Pets</h5>
-                            </div>
-                            <div className='centerRow'>
-                                <ConnectWithoutContactTwoToneIcon/>
-                                <h5>Smart Home</h5>
-                            </div>
-                            <div className='centerRow'>
-                                <LensBlurTwoToneIcon/>
-                                <h5>Heating</h5>
-                            </div>
-                            <div className='centerRow'>
-                                <FireplaceTwoToneIcon/>
-                                <h5>Fireplace</h5>
-                            </div>
-                            <div className='centerRow'>
-                                <TollTwoToneIcon/>
-                                <h5>others</h5>
-                            </div>
+                                    return !this.props.data[info?.value] ? null :
+                                        <div className='centerRow' key={'gi-' + index}>
+                                            {info?.icon}
+                                            <h5>{info?.label}</h5>
+                                        </div>
+                                })
+                            }
+
+
+                            {
+                                interiorInformation
+                                    .map((title: string) => getPropertyOptionsInfo(title)?.value)
+                                    .find(value => !value || this.props.data[value]) === undefined ? null :
+                                    <h4 style={{width: '100%'}}>Interior Information:</h4>
+                            }
+                            {
+                                interiorInformation.map((title: string, index) => {
+                                    const info = getPropertyOptionsInfo(title);
+                                    if (!info) return null;
+
+                                    return !this.props.data[info?.value] ? null :
+                                        <div className='centerRow' key={'ii-' + index}>
+                                            {info?.icon}
+                                            <h5>{info?.label}</h5>
+                                        </div>
+                                })
+                            }
+                            {
+                                additionalInformation
+                                    .map((title: string) => getPropertyOptionsInfo(title)?.value)
+                                    .find(value => !value || this.props.data[value]) === undefined ? null :
+                                    <h4 style={{width: '100%'}}>Additional Information:</h4>
+                            }
+
+                            {
+                                additionalInformation.map((title: string, index) => {
+                                    const info = getPropertyOptionsInfo(title);
+                                    if (!info) return null;
+
+                                    return !this.props.data[info?.value] ? null :
+                                        <div className='centerRow' key={'ai-' + index}>
+                                            {info?.icon}
+                                            <h5>{info?.label}</h5>
+                                        </div>
+                                })
+                            }
 
                         </div>
                         <div style={{marginLeft: '1em'}}>

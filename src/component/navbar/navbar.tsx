@@ -47,9 +47,8 @@ class Navbar extends Component<any, any> {
 
                     <div className="navbarNavigationsButtons">
                         <ButtonGroup variant="text" aria-label="text button group">
-                            <Button onClick={() => navigate('/buy')}>{t('Buy')}</Button>
-                            <Button onClick={() => navigate('/rent')}>{t('Rent')}</Button>
-                            <Button onClick={() => navigate('/sell')}>{t('Sell')}</Button>
+                            <Button onClick={() => navigate('/explore')}>{t('Explore')}</Button>
+                            <Button onClick={() => navigate('/post')}>{t('Post')}</Button>
                         </ButtonGroup>
                     </div>
 

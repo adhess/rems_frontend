@@ -1,0 +1,11 @@
+.container {
+  display: flex;
+  flex-direction: row;
+  flex-flow: wrap;
+  align-items: center;
+
+  > * {
+    //margin-right: 5px !important;
+    margin-left: 5px !important;
+  }
+}

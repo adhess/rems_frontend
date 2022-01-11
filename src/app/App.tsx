@@ -29,12 +29,12 @@ class App extends Component<any, any> {
                         <Route path="/" exact component={Home}/>
                         <Route path="/oauth2/redirect" component={OAuth2RedirectHandler}/>
                         <Route path="/profile" exact component={Profile}/>
-                        <Route path="/rent" exact component={RentContainer}/>
-                        <Route path="/sell" exact component={PostPropertyContainer}/>
+                        <Route path="/explore" exact component={RentContainer}/>
+                        <Route path="/post" exact component={PostPropertyContainer}/>
                     </Switch>
                 </div>
                 <div className="footer">
-                    <p>All rights reserved: © 2022 ZLand</p>
+                    <p style={{margin: 0, fontSize: 10}}>All rights reserved: © 2022 ZLand</p>
                 </div>
             </div>
 

@@ -7,6 +7,7 @@ import BathtubTwoToneIcon from '@mui/icons-material/BathtubTwoTone';
 import FavoriteTwoToneIcon from '@mui/icons-material/FavoriteTwoTone';
 import {connect} from "react-redux";
 import {DETAILS_PROPERTY_MODAL} from "../../../store/actions";
+import AddressRow from "../../../common/AddressRow/AddressRow";
 
 type propsType = {
     data: PropertyType,
@@ -21,17 +22,17 @@ class Property extends Component<propsType, any> {
         return <div className='propertyContainer' onClick={openDetailsPropertyHandler}>
             <div>
                 <img src={image} alt=""/>
-                <h4 className='price'>${this.props.data.rentPrice}/mo</h4>
+                <h4 className='price'>{this.props.data.price} dt/mo</h4>
                 <FavoriteTwoToneIcon className="favorite"/>
             </div>
             <div>
                 <div className='property-infos'>
-                    <div className='property-info'><p>{this.props.data.bathroomsNb}</p> <BathtubTwoToneIcon/></div>
-                    <div className='property-info'><p>{this.props.data.bedroomsNb}</p> <HotelTwoToneIcon/></div>
+                    <div className='property-info'><p>{this.props.data.nbBathrooms}</p> <BathtubTwoToneIcon/></div>
+                    <div className='property-info'><p>{this.props.data.nbBedrooms}</p> <HotelTwoToneIcon/></div>
                     <div className='property-info'><p>{this.props.data.area}</p><span style={{fontWeight: 200}}>㎡</span></div>
                 </div>
 
-                <p>{this.props.data.address}</p>
+                <AddressRow {...this.props?.data?.address}/>
             </div>
         </div>;
     }

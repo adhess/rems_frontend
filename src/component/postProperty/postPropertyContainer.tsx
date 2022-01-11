@@ -7,37 +7,35 @@ import {
 } from "@mui/material";
 import PropertyForSell from "../../assets/img/property_for_sell.png";
 import PropertyForRent from "../../assets/img/home_for_rent.png";
-import YardTwoToneIcon from '@mui/icons-material/YardTwoTone';
-import BalconyTwoToneIcon from '@mui/icons-material/BalconyTwoTone';
-import ElevatorIcon from '@mui/icons-material/ElevatorTwoTone';
-import WaterTwoToneIcon from '@mui/icons-material/WaterTwoTone';
-import ParkTwoToneIcon from '@mui/icons-material/ParkTwoTone';
-import PoolTwoToneIcon from '@mui/icons-material/PoolTwoTone';
-import PermIdentityTwoToneIcon from '@mui/icons-material/PermIdentityTwoTone';
-import SecurityTwoToneIcon from '@mui/icons-material/SecurityTwoTone';
-import FireplaceTwoToneIcon from '@mui/icons-material/FireplaceTwoTone';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import React from "react";
-import {faSatelliteDish} from "@fortawesome/free-solid-svg-icons";
-import CountertopsTwoToneIcon from '@mui/icons-material/CountertopsTwoTone';
-import KitchenTwoToneIcon from '@mui/icons-material/KitchenTwoTone';
-import MicrowaveTwoToneIcon from '@mui/icons-material/MicrowaveTwoTone';
-import TvTwoToneIcon from '@mui/icons-material/TvTwoTone';
-import LocalLaundryServiceTwoToneIcon from '@mui/icons-material/LocalLaundryServiceTwoTone';
-import CompassCalibrationTwoToneIcon from '@mui/icons-material/CompassCalibrationTwoTone';
 import MapContainer from "../map/mapContainer";
 import ArrowForwardIosTwoToneIcon from '@mui/icons-material/ArrowForwardIosTwoTone';
 import ArrowBackIosNewTwoToneIcon from '@mui/icons-material/ArrowBackIosNewTwoTone';
-import {postNewProperty} from "../../utils/APIUtils";
+import {findAddress, postNewProperty} from "../../utils/APIUtils";
 import PropertyLocationMarkerContext from "../../context/globalContext";
 import config from '../map/config.json';
+import {
+    additionalInformation,
+    FormType,
+    generalInformation, interiorInformation,
+    PropertyNature,
+} from "../../types/inedex";
+import MobileDatePicker from '@mui/lab/MobileDatePicker';
+import LocalizationProvider from '@mui/lab/LocalizationProvider';
+import AdapterDateFns from '@mui/lab/AdapterMoment';
+import {getPropertyOptionsInfo} from "../../utils/utils";
+import {ReactJSXElement} from "@emotion/react/types/jsx-namespace";
 
-class PostPropertyContainer extends Component<any, any> {
+type stateType = {
+    [key: string]: any
+}
 
-    state = {
+class PostPropertyContainer extends Component<any, stateType> {
+
+    state: stateType = {
         activeStep: 0,
 
-        formType: "rent",
+        formType: FormType.RENT,
         propertyType: "",
         nbBedrooms: "",
         nbBathrooms: "",
@@ -45,30 +43,34 @@ class PostPropertyContainer extends Component<any, any> {
         price: "",
         age: "",
         nbFloors: "",
+        availableDate: new Date(),
 
-        isGarden: false,
-        isTerrace: false,
-        isElevator: false,
-        isSeaView: false,
-        isMountainView: false,
-        isSwimmingPool: false,
-        isConcierge: false,
+        hasGarden: false,
+        hasTerrace: false,
+        hasElevator: false,
+        hasSeaView: false,
+        hasMountainView: false,
+        hasSwimmingPool: false,
+        hasConcierge: false,
+        hasParking: false,
 
-        isSatelliteDish: false,
-        isFirePlace: false,
-        isClimatisation: false,
-        isCentralHeating: false,
-        isSecurity: false,
+        hasSatelliteDish: false,
+        hasFirePlace: false,
+        hasCooling: false,
+        hasCentralHeating: false,
+        hasSecurity: false,
 
-        isModernKitchen: false,
-        isRefrigerator: false,
-        isOven: false,
-        isTV: false,
-        isCleaningMachine: false,
-        isInternet: false,
-        isMicrowave: false,
+        hasModernKitchen: false,
+        hasRefrigerator: false,
+        hasOven: false,
+        hasTV: false,
+        hasCleaningMachine: false,
+        hasInternet: false,
+        hasMicrowave: false,
 
         images: [],
+
+        address: {}
     }
     markerCoordinates = [...config.center];
 
@@ -76,16 +78,16 @@ class PostPropertyContainer extends Component<any, any> {
         const step0 = <div className="step0Container">
             <div className="sellRentContainer">
                 <div
-                    className={["propertyCard", this.state.formType === "sell" ? "propertyCardSelected" : ""].join(" ")}>
+                    className={["propertyCard", this.state.formType === FormType.SELL ? "propertyCardSelected" : ""].join(" ")}>
                     <h3>Property To Sell</h3>
-                    <div onClick={() => this.setState({formType: "sell"})}>
+                    <div onClick={() => this.setState({formType: FormType.SELL})}>
                         <img src={PropertyForSell} alt=""/>
                     </div>
                 </div>
                 <div
-                    className={["propertyCard", this.state.formType === "rent" ? "propertyCardSelected" : ""].join(" ")}>
+                    className={["propertyCard", this.state.formType === FormType.RENT ? "propertyCardSelected" : ""].join(" ")}>
                     <h3>Property To Rent</h3>
-                    <div onClick={() => this.setState({formType: "rent"})}>
+                    <div onClick={() => this.setState({formType: FormType.RENT})}>
                         <img src={PropertyForRent} alt=""/>
                     </div>
                 </div>
@@ -97,8 +99,12 @@ class PostPropertyContainer extends Component<any, any> {
                         value={this.state.propertyType}
                         label="Property Type *">
                     {
-                        ["Mansion, Villa, Townhouse, House...", "Lot, Agricultural Parcel...", "Flat", "Commercial, Garage..."]
-                            .map(u => <MenuItem key={u} value={u}>{u}</MenuItem>)
+                        [
+                            ["Mansion, Villa, Townhouse, House...", PropertyNature.HOUSE],
+                            ["Lot, Agricultural Parcel...", PropertyNature.LOT],
+                            ["Flat", PropertyNature.FLAT],
+                            ["Commercial, Garage...", PropertyNature.COMMERCIAL]
+                        ].map(u => <MenuItem key={u[0]} value={u[1]}>{u[0]}</MenuItem>)
                     }
                 </Select>
             </FormControl>
@@ -164,184 +170,104 @@ class PostPropertyContainer extends Component<any, any> {
                                type="number"
                                endAdornment={<InputAdornment position="end">Floors</InputAdornment>}/>
             </FormControl>
+            <LocalizationProvider dateAdapter={AdapterDateFns}>
+
+                <MobileDatePicker
+                    label="When the property will be available to use?"
+                    inputFormat="DD/MM/yyyy"
+                    value={this.state.availableDate}
+                    onChange={(m) => this.setState({availableDate: m})}
+                    // onChange={(event: any) => this.setState({availableDate: event.target.value})}
+                    renderInput={(params: any) => <TextField {...params} />}
+                />
+            </LocalizationProvider>
         </div>
         const step1 = <FormGroup className="propertyFeaturesSection">
-            <FormControlLabel color="success"
-                              control={<Checkbox checked={this.state.isGarden}
-                                                 onChange={(event: any) => this.setState({isGarden: event.target.checked})}/>}
-                              label={
-                                  <div className="featureCheckbox">
-                                      <YardTwoToneIcon/>
-                                      <h4>Garden</h4>
-                                  </div>
-                              }/>
-            <FormControlLabel color="success"
-                              control={<Checkbox checked={this.state.isTerrace}
-                                                 onChange={(event: any) => this.setState({isTerrace: event.target.checked})}/>}
-                              label={
-                                  <div className="featureCheckbox">
-                                      <BalconyTwoToneIcon/>
-                                      <h4>Terrace</h4>
-                                  </div>
-                              }/>
-            <FormControlLabel color="success"
-                              control={<Checkbox checked={this.state.isElevator}
-                                                 onChange={(event: any) => this.setState({isElevator: event.target.checked})}/>}
-                              label={
-                                  <div className="featureCheckbox">
-                                      <ElevatorIcon/>
-                                      <h4>Elevator</h4>
-                                  </div>
-                              }/>
-            <FormControlLabel color="success"
-                              control={<Checkbox checked={this.state.isSeaView}
-                                                 onChange={(event: any) => this.setState({isSeaView: event.target.checked})}/>}
-                              label={
-                                  <div className="featureCheckbox">
-                                      <WaterTwoToneIcon/>
-                                      <h4>Sea views</h4>
-                                  </div>
-                              }/>
-            <FormControlLabel color="success"
-                              control={<Checkbox checked={this.state.isMountainView}
-                                                 onChange={(event: any) => this.setState({isMountainView: event.target.checked})}/>}
-                              label={
-                                  <div className="featureCheckbox">
-                                      <ParkTwoToneIcon/>
-                                      <h4>Mountain views</h4>
-                                  </div>
-                              }/>
-            <FormControlLabel color="success"
-                              control={<Checkbox checked={this.state.isSwimmingPool}
-                                                 onChange={(event: any) => this.setState({isSwimmingPool: event.target.checked})}/>}
-                              label={
-                                  <div className="featureCheckbox">
-                                      <PoolTwoToneIcon/>
-                                      <h4>Swimming pool</h4>
-                                  </div>
-                              }/>
-            <FormControlLabel color="success"
-                              control={<Checkbox checked={this.state.isConcierge}
-                                                 onChange={(event: any) => this.setState({isConcierge: event.target.checked})}/>}
-                              label={
-                                  <div className="featureCheckbox">
-                                      <PermIdentityTwoToneIcon/>
-                                      <h4>Concierge</h4>
-                                  </div>
-                              }/>
+            {
+                generalInformation.map((title: string, index: number) => {
+                        const info = getPropertyOptionsInfo(title);
+                        if (!info) return null;
+
+                        const value: string = info?.value;
+                        const label: string = info?.label;
+                        const icon: ReactJSXElement = info?.icon;
+
+                        return <FormControlLabel
+                            key={"pch-" + index}
+                            color="success"
+                            control={
+                                <Checkbox
+                                    checked={this.state[value]}
+                                    onChange={(event: any) => this.setState({[value]: event.target.checked})}
+                                />
+                            }
+                            label={
+                                <div className="featureCheckbox">
+                                    {icon}
+                                    <h4>{label}</h4>
+                                </div>
+                            }/>
+                    }
+                )
+            }
         </FormGroup>
         const step2 = <FormGroup className="propertyFeaturesSection">
-            <FormControlLabel color="success"
-                              control={<Checkbox checked={this.state.isSatelliteDish}
-                                                 onChange={(event: any) => this.setState({isSatelliteDish: event.target.checked})}/>}
-                              label={
-                                  <div className="featureCheckbox">
-                                      <FontAwesomeIcon icon={faSatelliteDish}/>
-                                      <h4>A satellite dish</h4>
-                                  </div>
-                              }/>
-            <FormControlLabel color="success"
-                              control={<Checkbox checked={this.state.isFirePlace}
-                                                 onChange={(event: any) => this.setState({isFirePlace: event.target.checked})}/>}
-                              label={
-                                  <div className="featureCheckbox">
-                                      <FireplaceTwoToneIcon/>
-                                      <h4>Fireplace</h4>
-                                  </div>
-                              }/>
-            <FormControlLabel color="success"
-                              control={<Checkbox checked={this.state.isClimatisation}
-                                                 onChange={(event: any) => this.setState({isClimatisation: event.target.checked})}/>}
-                              label={
-                                  <div className="featureCheckbox">
-                                      <ElevatorIcon/>
-                                      <h4>Climatisation</h4>
-                                  </div>
-                              }/>
-            <FormControlLabel color="success" control={<Checkbox checked={this.state.isCentralHeating}
-                                                                 onChange={(event: any) => this.setState({isCentralHeating: event.target.checked})}/>}
-                              label={
-                                  <div className="featureCheckbox">
-                                      <WaterTwoToneIcon/>
-                                      <h4>Central Heating</h4>
-                                  </div>
-                              }/>
-            <FormControlLabel color="success" control={<Checkbox checked={this.state.isSecurity}
-                                                                 onChange={(event: any) => this.setState({isSecurity: event.target.checked})}/>}
-                              label={
-                                  <div className="featureCheckbox">
-                                      <SecurityTwoToneIcon/>
-                                      <h4>Security</h4>
-                                  </div>
-                              }/>
+            {
+                interiorInformation.map((title: string, index: number) => {
+                        const info = getPropertyOptionsInfo(title);
+                        if (!info) return null;
+
+                        const value: string = info?.value;
+                        const label: string = info?.label;
+                        const icon: ReactJSXElement = info?.icon;
+
+                        return <FormControlLabel
+                            key={"ich-" + index}
+                            color="success"
+                            control={
+                                <Checkbox
+                                    checked={this.state[value]}
+                                    onChange={(event: any) => this.setState({[value]: event.target.checked})}
+                                />
+                            }
+                            label={
+                                <div className="featureCheckbox">
+                                    {icon}
+                                    <h4>{label}</h4>
+                                </div>
+                            }/>
+                    }
+                )
+            }
         </FormGroup>
         const step3 = <FormGroup className="propertyFeaturesSection">
-            <FormControlLabel color="success"
-                              control={<Checkbox checked={this.state.isModernKitchen}
-                                                 onChange={(event: any) => this.setState({isModernKitchen: event.target.checked})}/>}
-                              label={
-                                  <div className="featureCheckbox">
-                                      <CountertopsTwoToneIcon/>
-                                      <h4>Modern Kitchen</h4>
-                                  </div>
-                              }/>
-            <FormControlLabel color="success"
-                              control={<Checkbox checked={this.state.isRefrigerator}
-                                                 onChange={(event: any) => this.setState({isRefrigerator: event.target.checked})}/>}
-                              label={
-                                  <div className="featureCheckbox">
-                                      <KitchenTwoToneIcon/>
-                                      <h4>Refrigerator</h4>
-                                  </div>
-                              }/>
-            <FormControlLabel color="success"
-                              control={<Checkbox checked={this.state.isOven}
-                                                 onChange={(event: any) => this.setState({isOven: event.target.checked})}/>}
-                              label={
-                                  <div className="featureCheckbox">
-                                      <WaterTwoToneIcon/>
-                                      <h4>Oven</h4>
-                                  </div>
-                              }/>
-            <FormControlLabel color="success"
-                              control={<Checkbox checked={this.state.isTV}
-                                                 onChange={(event: any) => this.setState({isTV: event.target.checked})}/>}
-                              label={
-                                  <div className="featureCheckbox">
-                                      <TvTwoToneIcon/>
-                                      <h4>TV</h4>
-                                  </div>
-                              }/>
+            {
+                additionalInformation.map((title: string, index: number) => {
+                        const info = getPropertyOptionsInfo(title);
+                        if (!info) return null;
 
-            <FormControlLabel color="success"
-                              control={<Checkbox checked={this.state.isCleaningMachine}
-                                                 onChange={(event: any) => this.setState({isCleaningMachine: event.target.checked})}/>}
-                              label={
-                                  <div className="featureCheckbox">
-                                      <LocalLaundryServiceTwoToneIcon/>
-                                      <h4>Cleaning Machine</h4>
-                                  </div>
-                              }/>
+                        const value: string = info?.value;
+                        const label: string = info?.label;
+                        const icon: ReactJSXElement = info?.icon;
 
-            <FormControlLabel color="success"
-                              control={<Checkbox checked={this.state.isInternet}
-                                                 onChange={(event: any) => this.setState({isInternet: event.target.checked})}/>}
-                              label={
-                                  <div className="featureCheckbox">
-                                      <CompassCalibrationTwoToneIcon/>
-                                      <h4>Internet</h4>
-                                  </div>
-                              }/>
-
-            <FormControlLabel color="success"
-                              control={<Checkbox checked={this.state.isMicrowave}
-                                                 onChange={(event: any) => this.setState({isMicrowave: event.target.checked})}/>}
-                              label={
-                                  <div className="featureCheckbox">
-                                      <MicrowaveTwoToneIcon/>
-                                      <h4>Microwave</h4>
-                                  </div>
-                              }/>
+                        return <FormControlLabel
+                            key={"ach-" + index}
+                            color="success"
+                            control={
+                                <Checkbox
+                                    checked={this.state[value]}
+                                    onChange={(event: any) => this.setState({[value]: event.target.checked})}
+                                />
+                            }
+                            label={
+                                <div className="featureCheckbox">
+                                    {icon}
+                                    <h4>{label}</h4>
+                                </div>
+                            }/>
+                    }
+                )
+            }
         </FormGroup>
         const step4 = <div>
             <PropertyLocationMarkerContext.Provider value={{coordinates: this.markerCoordinates}}>
@@ -389,7 +315,7 @@ class PostPropertyContainer extends Component<any, any> {
         </div>
         const step5 = <div>
             <p>-) Upload your images to google drive and make the links public.</p>
-            <p>-) Past the links below. (each image link in a separate line)</p>
+            <p>-) Past the links below. (Each image link in a separate line)</p>
             <TextField style={{width: 'calc(100% - 1em)'}}
                        label="Images"
                        multiline
@@ -399,10 +325,10 @@ class PostPropertyContainer extends Component<any, any> {
             />
         </div>
 
-        const steps = ['Property Information', 'General Information', 'Interior Information', 'Additional Information', "Location", "Images"];
+        const stepsTitle = ['Property Information', 'General Information', 'Interior Information', 'Additional Information', "Location", "Images"];
 
         const handleNextStep = () => {
-            if (this.state.activeStep === steps.length - 1) handleSubmit();
+            if (this.state.activeStep === stepsTitle.length - 1) handleSubmit();
             else this.setState((state: any) => ({
                 activeStep: state.activeStep + 1
             }));
@@ -419,17 +345,20 @@ class PostPropertyContainer extends Component<any, any> {
             const form: any = Object.assign({}, this.state);
             delete form?.activeStep;
 
-            form.latitude = this.markerCoordinates[0];
-            form.longitude = this.markerCoordinates[1];
+            [form.latitude, form.longitude] = [...this.markerCoordinates];
 
-            console.log(form);
-            postNewProperty(form)
-                .then(response => {
+            findAddress(form.longitude, form.latitude).then(u => {
+                form.address = u.address;
+                console.log(form);
+                postNewProperty(form)
+                    .then(response => {
 
-                })
-                .catch(error => {
+                    })
+                    .catch(error => {
 
-                })
+                    })
+
+            })
         };
 
         const nextButtonDisabled = () => {
@@ -452,7 +381,7 @@ class PostPropertyContainer extends Component<any, any> {
             >
                 <Stepper activeStep={this.state.activeStep}>
                     {
-                        steps.map(
+                        stepsTitle.map(
                             (value, index) => <Step key={"step " + index}><StepLabel>{value}</StepLabel></Step>
                         )
                     }
@@ -473,7 +402,7 @@ class PostPropertyContainer extends Component<any, any> {
                         <Box sx={{flex: '1 1 auto'}}/>
 
                         <Button onClick={handleNextStep} disabled={nextButtonDisabled()}>
-                            {this.state.activeStep === steps.length - 1 ? 'Submit' : 'Next'}
+                            {this.state.activeStep === stepsTitle.length - 1 ? 'Submit' : 'Next'}
                             <ArrowForwardIosTwoToneIcon/>
                         </Button>
                     </Box>
