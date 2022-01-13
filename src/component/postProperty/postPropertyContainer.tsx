@@ -1,4 +1,4 @@
-import {Component} from "react";
+import {Component, ComponentType} from "react";
 import "./postPropertyContainer.scss";
 import {
     Box, Button, Checkbox, FormControl, FormControlLabel,
@@ -25,6 +25,10 @@ import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import AdapterDateFns from '@mui/lab/AdapterMoment';
 import {getPropertyOptionsInfo} from "../../utils/utils";
 import {ReactJSXElement} from "@emotion/react/types/jsx-namespace";
+import {compose} from "redux";
+import {connect} from "react-redux";
+import {withRouter} from "react-router";
+import {LOGIN_MODAL} from "../../store/actions";
 
 type stateType = {
     [key: string]: any
@@ -73,6 +77,15 @@ class PostPropertyContainer extends Component<any, stateType> {
         address: {}
     }
     markerCoordinates = [...config.center];
+
+
+    constructor(props: any) {
+        super(props);
+        if (!props.user) {
+            this.props.history.push('/');
+            this.props.setLoginModal(true);
+        }
+    }
 
     render() {
         const step0 = <div className="step0Container">
@@ -432,4 +445,16 @@ class PostPropertyContainer extends Component<any, stateType> {
     }
 }
 
-export default PostPropertyContainer;
+const mapDispatchToProps = (dispatch: any) => {
+    return {
+        setLoginModal: (val: any) => dispatch({type: LOGIN_MODAL, value: val})
+    }
+}
+
+const mapStateToProps = (state: any) => {
+    return {
+        user: state.user
+    }
+}
+
+export default compose<ComponentType>(withRouter, connect(mapStateToProps, mapDispatchToProps))(PostPropertyContainer);
