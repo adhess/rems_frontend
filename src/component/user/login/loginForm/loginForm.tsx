@@ -1,7 +1,7 @@
 import {Component, ComponentType} from "react";
 import {getCurrentUser, login, signup} from "../../../../utils/APIUtils";
 import {ACCESS_TOKEN} from "../../../../constants";
-import {Button, Tab, Tabs, TextField} from "@mui/material";
+import {Button, FormControl, OutlinedInput, Tab, Tabs, TextField} from "@mui/material";
 import {withSnackbar} from "notistack";
 import {withRouter} from "react-router";
 import {compose} from "redux";
@@ -10,20 +10,28 @@ import './loginForm.scss'
 import {LOGIN, LOGIN_MODAL} from "../../../../store/actions";
 import isEmail from 'validator/lib/isEmail';
 import isStrongPassword from 'validator/lib/isStrongPassword';
+import PhoneMask from "../../../../common/PhoneMask";
 import {Trans, withTranslation} from "react-i18next";
 
 class LoginForm extends Component<any, any> {
+
     constructor(props: any) {
         super(props);
         this.state = {
             tabIndex: 0,
-            email: '',
-            password: '',
             name: '',
+
+            password: '',
             isWeekPassword: false,
+            passwordHelperText: '',
+
+            email: '',
             isWrongEmail: false,
             emailHelperText: '',
-            passwordHelperText: ''
+
+            phoneNumber: '',
+            isWrongPhoneNumber: false,
+            phoneNumberHelperText: '',
         };
         this.handleLogin = this.handleLogin.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
@@ -65,7 +73,12 @@ class LoginForm extends Component<any, any> {
     handleSignup(event: any) {
         event.preventDefault();
 
-        const sigInRequest = {email: this.state.email, password: this.state.password, name: this.state.name};
+        const sigInRequest = {
+            email: this.state.email,
+            password: this.state.password,
+            name: this.state.name,
+            phoneNumber: Number.parseInt(this.state.phoneNumber.split(" ").join(""))
+        };
 
 
         if (this.isValidForm()) {
@@ -93,9 +106,10 @@ class LoginForm extends Component<any, any> {
     handleTabChange = (event: React.SyntheticEvent | undefined, newValue: number) => {
         this.setState({
             tabIndex: newValue,
-            name: '',
-            email: '',
-            password: '',
+            // name: '',
+            // email: '',
+            // password: '',
+            // phoneNumber: '',
             isWeekPassword: false,
             isWrongEmail: false,
             emailHelperText: '',
@@ -131,7 +145,8 @@ class LoginForm extends Component<any, any> {
                                onChange={this.handleInputChange}/>
 
                     <Button fullWidth variant="contained" onClick={this.handleLogin.bind(this)}>{t('Sign in')}</Button>
-                    <button className="forgetYourPasswordText" onClick={this.handleForgetPassword.bind(this)}>{t('Forget your password?')}</button>
+                    <button className="forgetYourPasswordText"
+                            onClick={this.handleForgetPassword.bind(this)}>{t('Forget your password?')}</button>
                 </TabPanel>
 
                 <TabPanel value={this.state.tabIndex} index={1}>
@@ -160,7 +175,20 @@ class LoginForm extends Component<any, any> {
                                helperText={this.state.passwordHelperText}
                                onChange={this.handleInputChange}/>
 
-                    <Button fullWidth variant="contained" onClick={this.handleSignup.bind(this)}>{t('Submit')}</Button>
+                    <h4 style={{margin: "0"}}>{t('Phone Number')}</h4>
+                    <FormControl fullWidth>
+                        <OutlinedInput size="small"
+                                       value={this.state.phoneNumber}
+                                       name="phoneNumber"
+                                       onChange={this.handleInputChange}
+                                       inputComponent={PhoneMask}
+                                       startAdornment="(+216)"
+                        />
+                    </FormControl>
+
+                    <Button style={{marginTop: "1em"}}
+                            onClick={this.handleSignup.bind(this)}
+                            fullWidth variant="contained">{t('Submit')}</Button>
                 </TabPanel>
             </div>
         )

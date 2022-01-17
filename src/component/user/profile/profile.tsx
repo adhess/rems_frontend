@@ -1,6 +1,7 @@
-import {Component, useEffect, useRef} from "react";
+import React, {Component, useEffect, useRef} from "react";
 import {connect} from "react-redux";
 import './profile.scss'
+import PhoneNumber from "../../../common/PhoneNumber";
 
 class Profile extends Component<any, any> {
     render() {
@@ -20,6 +21,9 @@ class Profile extends Component<any, any> {
                         <div className="profile-name">
                             <h2>{this.props.user?.name}</h2>
                             <p className="profile-email">{this.props.user?.email}</p>
+                            <p className="profile-email">
+                                <PhoneNumber value={this.props.user?.phoneNumber}/>
+                            </p>
                         </div>
                     </div>
                 </div>

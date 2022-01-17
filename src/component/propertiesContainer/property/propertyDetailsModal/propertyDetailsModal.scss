@@ -12,13 +12,19 @@
   justify-content: space-between;
 
   img {
-    width: calc(50% - 2px);
-    margin-bottom: 4px;
+    width: calc(50% - 1px);
+    margin-bottom: 2px;
   }
 }
 
 .propertyDisplaySection {
   overflow-y: scroll;
+  display: flex;
+  flex-direction: column;
+
+  >:first-child {
+    margin-bottom: 2px;
+  }
 }
 
 .centerRow {

@@ -28,3 +28,8 @@ export function findAddress(lat: Number, lon: Number) {
     return fetch('http://nominatim.openstreetmap.org/reverse?format=json&lon=' + lon + '&lat=' + lat)
         .then(res => res.json());
 }
+
+export function findUserInfoByPropertyId(id: Number) {
+    return axios.get(API_BASE_URL + "/property/findUserInfoByPropertyId?propertyId=" + id)
+        .then(res => res.data);
+}

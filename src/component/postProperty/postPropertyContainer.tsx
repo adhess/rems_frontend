@@ -362,10 +362,9 @@ class PostPropertyContainer extends Component<any, stateType> {
 
             findAddress(form.longitude, form.latitude).then(u => {
                 form.address = u.address;
-                console.log(form);
                 postNewProperty(form)
                     .then(response => {
-
+                        console.log(response);
                     })
                     .catch(error => {
 

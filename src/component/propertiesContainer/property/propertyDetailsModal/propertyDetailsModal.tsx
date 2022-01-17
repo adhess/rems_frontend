@@ -15,6 +15,9 @@ import EventAvailableTwoToneIcon from '@mui/icons-material/EventAvailableTwoTone
 import CallIcon from '@mui/icons-material/Call';
 import AddressRow from "../../../../common/AddressRow/AddressRow";
 import {getPropertyOptionsInfo} from "../../../../utils/utils";
+import {findUserInfoByPropertyId} from "../../../../utils/APIUtils";
+import PersonIcon from '@mui/icons-material/Person';
+import PhoneNumber from "../../../../common/PhoneNumber";
 
 type propsType = {
     isDetailsPropertyOpen: boolean,
@@ -23,6 +26,17 @@ type propsType = {
 };
 
 class PropertyDetailsModal extends Component<propsType, any> {
+    state = {
+        name: '',
+        phoneNumber: '',
+        imgUrl: '',
+    }
+
+    componentDidMount() {
+        findUserInfoByPropertyId(this.props.data.id).then(info => {
+            this.setState(info);
+        })
+    }
 
     render() {
         const StyledModal = styled(ModalUnstyled)`
@@ -202,11 +216,17 @@ class PropertyDetailsModal extends Component<propsType, any> {
 
                         </div>
                         <div style={{marginLeft: '1em'}}>
-                            <h3>Contact Name Text</h3>
-                            <p>Company Name Text</p>
+                            <h3>Owner</h3>
+
                             <div style={{display: 'flex', flexDirection: 'row', alignItems: "center"}}>
+                                <PersonIcon style={{width: 17}}/>
+                                <h5 style={{margin: "0 0 0 5px"}}>{this.state.name}</h5>
+                            </div>
+                        <div style={{display: 'flex', flexDirection: 'row'}}>
                                 <CallIcon style={{width: 17}}/>
-                                <h5 style={{margin: 0}}>(+216) 55 379 899</h5>
+                                <h5 style={{margin: "0 0 0 5px"}}>
+                                    <PhoneNumber value={this.state.phoneNumber}/>
+                                </h5>
                             </div>
                         </div>
                     </div>
