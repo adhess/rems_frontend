@@ -364,12 +364,8 @@ class PostPropertyContainer extends Component<any, stateType> {
                 form.address = u.address;
                 postNewProperty(form)
                     .then(response => {
-                        console.log(response);
-                    })
-                    .catch(error => {
-
-                    })
-
+                        this.props.history.push("/explore");
+                    });
             })
         };
 
