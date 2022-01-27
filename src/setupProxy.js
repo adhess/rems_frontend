@@ -4,7 +4,7 @@ module.exports = function(app) {
     app.use(
         '/api',
         createProxyMiddleware({
-            target: '${API_URL}',
+            target: 'https://zland-backend.herokuapp.com',
             changeOrigin: true,
             pathRewrite: {
                 "^/api": "/"

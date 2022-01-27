@@ -5,7 +5,7 @@
   },
   "proxies": {
     "/api": {
-      "origin": "${API_URL}",
+      "origin": "https://zland-backend.herokuapp.com",
       "changeOrigin": true,
       "pathRewrite": {
         "^/api": "/"
