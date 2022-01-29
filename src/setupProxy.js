@@ -11,4 +11,14 @@ module.exports = function(app) {
             }
         })
     );
+    app.use(
+        '/findAddress',
+        createProxyMiddleware({
+            target: "http://nominatim.openstreetmap.org",
+            changeOrigin: true,
+            pathRewrite: {
+                "^/findAddress": "/"
+            }
+        })
+    );
 };

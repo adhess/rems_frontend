@@ -10,6 +10,13 @@
       "pathRewrite": {
         "^/api": "/"
       }
+    },
+    "/findAddress": {
+      "origin": "http://nominatim.openstreetmap.org",
+      "changeOrigin": true,
+      "pathRewrite": {
+        "^/findAddress": "/"
+      }
     }
   }
 }

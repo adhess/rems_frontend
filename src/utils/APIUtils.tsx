@@ -25,7 +25,7 @@ export function findAllProperties() {
 }
 
 export function findAddress(lat: Number, lon: Number) {
-    return fetch('http://nominatim.openstreetmap.org/reverse?format=json&lon=' + lon + '&lat=' + lat)
+    return fetch('/findAddress/reverse?format=json&lon=' + lon + '&lat=' + lat)
         .then(res => res.json());
 }
 
