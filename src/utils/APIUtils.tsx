@@ -1,27 +1,27 @@
-import {API_BASE_URL, ACCESS_TOKEN} from "../constants";
+import {ACCESS_TOKEN} from "../constants";
 import axios from "axios";
 
 export function getCurrentUser() {
     if (!localStorage.getItem(ACCESS_TOKEN)) {
         return Promise.reject("No access token set.");
     }
-    return axios(API_BASE_URL + "/user/me");
+    return axios("/api/user/me");
 }
 
 export function login(loginRequest: any) {
-    return axios.post(API_BASE_URL + "/auth/login", loginRequest);
+    return axios.post("/api/auth/login", loginRequest);
 }
 
 export function signup(signupRequest: any) {
-    return axios.post(API_BASE_URL + "/auth/signup", signupRequest);
+    return axios.post("/api/auth/signup", signupRequest);
 }
 
 export function postNewProperty(form: any) {
-    return axios.post(API_BASE_URL + "/property/post", form);
+    return axios.post("/api/property/post", form);
 }
 
 export function findAllProperties() {
-    return axios.get(API_BASE_URL + "/property/findAll?pageSize=10&page=1");
+    return axios.get("/api/property/findAll?pageSize=10&page=1");
 }
 
 export function findAddress(lat: Number, lon: Number) {
@@ -30,6 +30,6 @@ export function findAddress(lat: Number, lon: Number) {
 }
 
 export function findUserInfoByPropertyId(id: Number) {
-    return axios.get(API_BASE_URL + "/property/findUserInfoByPropertyId?propertyId=" + id)
+    return axios.get("/api/property/findUserInfoByPropertyId?propertyId=" + id)
         .then(res => res.data);
 }
