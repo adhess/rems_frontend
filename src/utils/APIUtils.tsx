@@ -24,11 +24,6 @@ export function findAllProperties() {
     return axios.get("/api/property/findAll?pageSize=10&page=1");
 }
 
-export function findAddress(lat: Number, lon: Number) {
-    return fetch('/findAddress/reverse?format=json&lon=' + lon + '&lat=' + lat)
-        .then(res => res.json());
-}
-
 export function findUserInfoByPropertyId(id: Number) {
     return axios.get("/api/property/findUserInfoByPropertyId?propertyId=" + id)
         .then(res => res.data);

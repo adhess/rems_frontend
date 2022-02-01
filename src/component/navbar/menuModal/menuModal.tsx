@@ -5,6 +5,9 @@ import {ACCESS_TOKEN} from "../../../constants";
 import {withTranslation} from "react-i18next";
 import {compose} from "redux";
 import {withRouter} from "react-router";
+import {LOGOUT} from "../../../store/actions";
+import {connect} from "react-redux";
+import {withSnackbar} from "notistack";
 
 class MenuModal extends Component<any, any> {
     constructor(props: any) {
@@ -66,4 +69,16 @@ class MenuModal extends Component<any, any> {
     }
 }
 
-export default compose<any>(withTranslation(), withRouter)(MenuModal);
+
+const mapDispatchToProps = (dispatch: any) => {
+    return {
+        logout: () => dispatch({type: LOGOUT}),
+    }
+}
+
+const mapStateToProps = (state: any) => {
+    return {
+    }
+}
+
+export default compose<any>(withSnackbar, withTranslation(), withRouter, connect(mapStateToProps, mapDispatchToProps))(MenuModal);

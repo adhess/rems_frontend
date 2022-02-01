@@ -11,7 +11,7 @@ import React from "react";
 import MapContainer from "../map/mapContainer";
 import ArrowForwardIosTwoToneIcon from '@mui/icons-material/ArrowForwardIosTwoTone';
 import ArrowBackIosNewTwoToneIcon from '@mui/icons-material/ArrowBackIosNewTwoTone';
-import {findAddress, postNewProperty} from "../../utils/APIUtils";
+import {postNewProperty} from "../../utils/APIUtils";
 import PropertyLocationMarkerContext from "../../context/globalContext";
 import config from '../map/config.json';
 import {
