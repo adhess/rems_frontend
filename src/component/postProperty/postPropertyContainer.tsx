@@ -358,15 +358,12 @@ class PostPropertyContainer extends Component<any, stateType> {
             const form: any = Object.assign({}, this.state);
             delete form?.activeStep;
 
-            [form.latitude, form.longitude] = [...this.markerCoordinates];
+            [form.longitude, form.latitude] = [...this.markerCoordinates];
 
-            findAddress(form.longitude, form.latitude).then(u => {
-                form.address = u.address;
-                postNewProperty(form)
-                    .then(response => {
-                        this.props.history.push("/explore");
-                    });
-            })
+            postNewProperty(form)
+                .then(response => {
+                    this.props.history.push("/explore");
+                });
         };
 
         const nextButtonDisabled = () => {
