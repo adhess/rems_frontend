@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import './index.css';
 import App from './app/App';
 import reportWebVitals from './reportWebVitals';
@@ -25,8 +25,10 @@ axios.interceptors.request.use(
         return Promise.reject(error);
     }
 )
+const container = document.getElementById('root');
+const root = createRoot(container!);
 
-ReactDOM.render(
+root.render(
     <Provider store={store}>
         <Router>
             <React.StrictMode>
@@ -35,8 +37,7 @@ ReactDOM.render(
                 </SnackbarProvider>
             </React.StrictMode>
         </Router>
-    </Provider>,
-    document.getElementById('root')
+    </Provider>
 );
 
 // If you want to start measuring performance in your app, pass a function

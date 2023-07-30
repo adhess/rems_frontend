@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {Box, Button, ModalUnstyled, styled} from "@mui/material";
+import {Box, Button, styled} from "@mui/material";
 import {connect} from "react-redux";
 import {DETAILS_PROPERTY_MODAL} from "../../../../store/actions";
 import "./propertyDetailsModal.scss";
@@ -18,6 +18,7 @@ import {getPropertyOptionsInfo} from "../../../../utils/utils";
 import {findUserInfoByPropertyId} from "../../../../utils/APIUtils";
 import PersonIcon from '@mui/icons-material/Person';
 import PhoneNumber from "../../../../common/PhoneNumber";
+import Modal from "styled-react-modal";
 
 type propsType = {
     isDetailsPropertyOpen: boolean,
@@ -39,7 +40,7 @@ class PropertyDetailsModal extends Component<propsType, any> {
     }
 
     render() {
-        const StyledModal = styled(ModalUnstyled)`
+        const StyledModal = Modal.styled`
           position: fixed;
           z-index: 1300;
           right: 0;
@@ -76,9 +77,9 @@ class PropertyDetailsModal extends Component<propsType, any> {
         };
 
         return <>
-            <StyledModal open={this.props.isDetailsPropertyOpen}
-                         onClose={() => this.props.setDetailsPropertyOpen(false)}
-                         BackdropComponent={Backdrop}>
+            <StyledModal isOpen={this.props.isDetailsPropertyOpen}
+                         afterClose={() => this.props.setDetailsPropertyOpen(false)}
+                         >
                 <Box sx={style} className='box'>
                     <div className="propertyDisplaySection" style={{width: '60%'}}>
 

@@ -1,5 +1,5 @@
 import React, {Component, ComponentType} from "react";
-import {Box, Button, ModalUnstyled, styled} from "@mui/material";
+import {Box, Button, styled} from "@mui/material";
 import Login from "../../user/login/login";
 import {LOGIN_MODAL, LOGOUT} from "../../../store/actions";
 import {compose} from "redux";
@@ -7,13 +7,14 @@ import {withTranslation} from "react-i18next";
 import {withRouter} from "react-router";
 import {withSnackbar} from "notistack";
 import {connect} from "react-redux";
+import Modal from 'styled-react-modal';
 
 class LoginModal extends Component<any, any> {
 
 
     render() {
         const {t} = this.props;
-        const StyledModal = styled(ModalUnstyled)`
+        const StyledModal = Modal.styled`
           position: fixed;
           z-index: 1300;
           right: 0;
@@ -57,9 +58,9 @@ class LoginModal extends Component<any, any> {
             <>
                 <Button onClick={handleOpenLoginModal}>{t('Login')}</Button>
 
-                <StyledModal open={this.props.loginModal}
-                             onClose={() => this.props.setLoginModal(false)}
-                             BackdropComponent={Backdrop}>
+                <StyledModal isOpen={this.props.loginModal}
+                             afterClose={() => this.props.setLoginModal(false)}
+                             >
                     <Box sx={style}>
                         <Login/>
                     </Box>

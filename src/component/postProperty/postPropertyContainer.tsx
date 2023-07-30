@@ -189,7 +189,7 @@ class PostPropertyContainer extends Component<any, stateType> {
                     label="When the property will be available to use?"
                     inputFormat="DD/MM/yyyy"
                     value={this.state.availableDate}
-                    onChange={(m) => this.setState({availableDate: m})}
+                    onChange={(m: any) => this.setState({availableDate: m})}
                     // onChange={(event: any) => this.setState({availableDate: event.target.value})}
                     renderInput={(params: any) => <TextField {...params} />}
                 />
